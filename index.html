@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Multi DB Viewer</title>
+    <style>
+        /*button {
+            padding: 10px 20px;
+            margin: 5px;
+        }*/
+
+            .button-3d {
+            background-color: #4CAF50; /* Warna hijau */
+            color: white;
+            padding: 12px 24px;
+            font-size: 16px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            box-shadow: 0 5px #2e7031; /* Bayangan bawah */
+            transition: all 0.1s ease-in-out;
+            }
+
+            .button-3d:hover {
+            background-color: #45a049; /* Warna saat hover */
+            }
+
+            .button-3d:active {
+            box-shadow: 0 2px #2e7031; /* Bayangan ditekan */
+            transform: translateY(3px); /* Efek turun */
+            }
+
+        .selected {
+            background-color: green;
+            color: white;
+        }
+        form {
+            margin-top: 20px;
+        }
+
+
+    </style>
+
+<style>
+    <style>
+
+        body {
+        font-family: 'Segoe UI', sans-serif;
+        background: #f0f0f0;
+        padding: 40px;
+        display: flex;
+        justify-content: center;
+        }
+
+        table {
+        border-collapse: collapse;
+        width: 800px;
+        background: white;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 10px 20px rgba(0,0,0,0.15); /* Efek 3D */
+        }
+
+        caption {
+        padding: 16px;
+        font-size: 20px;
+        font-weight: bold;
+        background: linear-gradient(to right, #4CAF50, #43A047); /* Gradasi */
+        color: white;
+        }
+
+        thead {
+        background-color: #4CAF50;
+        color: white;
+        }
+
+        th, td {
+        padding: 14px 20px;
+        text-align: left;
+        }
+
+        tbody tr {
+        border-bottom: 1px solid #ddd;
+        }
+
+        tbody tr:hover {
+        background-color: #f5f5f5;
+        transform: scale(1.01);
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1); /* Sedikit efek hover 3D */
+        }
+
+        tbody tr:last-child {
+        border-bottom: none;
+        }
+    </style>
+  </style>
+
+</head>
+<body>
+    <h1>Data spare part Otomasi HSM</h1>
+    <form action="/show_data" method="post">
+        <button type="submit" name="db" value="db1.db" {% if db_name == 'db1.db' %}class="selected"{% endif %}>coiler DB1</button>
+        <button type="submit" name="db" value="db2.db" {% if db_name == 'db2.db' %}class="selected"{% endif %}>laminar DB2</button>
+        <button type="submit" name="db" value="db3.db" {% if db_name == 'db3.db' %}class="selected"{% endif %}>Finishing DB3</button>
+        <button type="submit" name="db" value="db4.db" {% if db_name == 'db4.db' %}class="selected"{% endif %}>Cropsear DB4</button>
+        <button type="submit" name="db" value="db5.db" {% if db_name == 'db5.db' %}class="selected"{% endif %}>Roughing DB5</button>
+        <button type="submit" name="db" value="db6.db" {% if db_name == 'db6.db' %}class="selected"{% endif %}>Sizeng DB6</button>
+        <button type="submit" name="db" value="db7.db" {% if db_name == 'db7.db' %}class="selected"{% endif %}>Furnace 1 DB7</button>
+        <button type="submit" name="db" value="db8.db" {% if db_name == 'db8.db' %}class="selected"{% endif %}>Furnace 2 DB8</button>
+    </form>
+
+    <h3>Tambah Data ke {{ db_name }}</h3>
+        <form action="/add_data" method="post">
+            <input type="hidden" name="db_name" value="{{ db_name }}">
+            {% if db_name == 'db1.db' %}
+                <input type="text" name="name" placeholder="Name" required>
+                <input type="email" name="email" placeholder="Email" required>
+                <input type="text" name="jumlah" placeholder="jumlah" required>
+            {% elif db_name == 'db2.db' %}
+                <input type="text" name="name" placeholder="Name" required>
+                <input type="email" name="email" placeholder="Email" required>
+                <input type="text" name="jumlah" placeholder="jumlah" required>
+            {% elif db_name == 'db3.db' %}
+                <input type="text" name="name" placeholder="Name" required>
+                <input type="email" name="email" placeholder="Email" required>
+                <input type="text" name="jumlah" placeholder="jumlah" required>
+                {% elif db_name == 'db4.db' %}
+                <input type="text" name="name" placeholder="Name" required>
+                <input type="email" name="email" placeholder="Email" required>
+                <input type="text" name="jumlah" placeholder="jumlah" required>
+                {% elif db_name == 'db5.db' %}
+                <input type="text" name="name" placeholder="Name" required>
+                <input type="email" name="email" placeholder="Email" required>
+                <input type="text" name="jumlah" placeholder="jumlah" required>
+                {% elif db_name == 'db6.db' %}
+                <input type="text" name="name" placeholder="Name" required>
+                <input type="email" name="email" placeholder="Email" required>
+                <input type="text" name="jumlah" placeholder="jumlah" required>
+                {% elif db_name == 'db7.db' %}
+                <input type="text" name="name" placeholder="Name" required>
+                <input type="email" name="email" placeholder="Email" required>
+                <input type="text" name="jumlah" placeholder="jumlah" required>
+                {% elif db_name == 'db8.db' %}
+                <input type="text" name="name" placeholder="Name" required>
+                <input type="email" name="email" placeholder="Email" required>
+                <input type="text" name="jumlah" placeholder="jumlah" required>
+                {% endif %}
+            <button type="submit">Tambah</button>
+                 
+    {% if data %}
+        <!--<h2>Data dari {{ db_name }} ({{ table_name }})</h2>-->
+        
+        <table border="1" cellpadding="5">
+            <thead>
+                <tr>
+                    {% for header in headers %}
+                        <th>{{ header }}</th>
+                    {% endfor %}
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in data %}
+                    <tr>
+                        {% for item in row %}
+                            <td>{{ item }}</td>
+                        {% endfor %}
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <!--<h3>Tambah Data ke {{ db_name }}</h3>
+        <form action="/add_data" method="post">
+            <input type="hidden" name="db_name" value="{{ db_name }}">
+            {% if db_name == 'db1.db' %}
+                <input type="text" name="name" placeholder="Name" required>
+                <input type="email" name="email" placeholder="Email" required>
+                <input type="text" name="jumlah" placeholder="jumlah" required>
+            {% elif db_name == 'db2.db' %}
+                <input type="text" name="name" placeholder="Name" required>
+                <input type="email" name="email" placeholder="Email" required>
+                <input type="text" name="jumlah" placeholder="jumlah" required>
+            {% elif db_name == 'db3.db' %}
+                <input type="text" name="name" placeholder="Name" required>
+                <input type="email" name="email" placeholder="Email" required>
+                <input type="text" name="jumlah" placeholder="jumlah" required>
+            {% endif %}
+            <button type="submit">Tambah</button>
+        </form>-->
+    {% endif %}
+</body>
+</html>
